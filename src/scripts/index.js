@@ -52,7 +52,6 @@ function startGame() {
 
 class TextComponent {
   constructor(size, font, color, posX, posY) {
-    // this.type = type;
     this.size = size;
     this.font = font;
     this.posX = posX;
@@ -183,45 +182,45 @@ function generateEnemyPlane() {
 
 function updateGameArea() {
   myGameArea.clear();
-  auxiliaryParameters.enemyGenerationCounter += 1;
-  generateEnemyPlane();
-  auxiliaryParameters.bulletsDistance += 3;
+  if (auxiliaryParameters.playerHealth > 0) {
+    auxiliaryParameters.enemyGenerationCounter += 1;
+    generateEnemyPlane();
+    auxiliaryParameters.bulletsDistance += 3;
 
-  auxiliaryParameters.heroPlane.newPos();
-  auxiliaryParameters.heroPlane.update();
-  scoreText.update();
-  livesText.update();
-  auxiliaryParameters.bullets.forEach(bullet => {
-    bullet.update();
-    bullet.newPos();
-    bullet.checkCollision();
-  });
+    auxiliaryParameters.heroPlane.newPos();
+    auxiliaryParameters.heroPlane.update();
 
-  if (
-    auxiliaryParameters.spacePressed &&
-    auxiliaryParameters.bulletsDistance > 50
-  ) {
-    auxiliaryParameters.heroPlane.shootTheBullet();
+    auxiliaryParameters.bullets.forEach(bullet => {
+      bullet.update();
+      bullet.newPos();
+      bullet.checkCollision();
+    });
+
+    if (
+      auxiliaryParameters.spacePressed &&
+      auxiliaryParameters.bulletsDistance > 50 &&
+      auxiliaryParameters.bullets.length <= 15
+    ) {
+      auxiliaryParameters.heroPlane.shootTheBullet();
+    }
+
+    auxiliaryParameters.enemyPlanes.forEach(enemyPlane => {
+      enemyPlane.update();
+      enemyPlane.newPos();
+      enemyPlane.checkTheGoal();
+    });
+
+    // limitation that the main aircraft does not fly out of the screen
+    auxiliaryParameters.heroPlane.posX = Math.max(
+      Math.min(auxiliaryParameters.heroPlane.posX, 584),
+      2
+    );
   }
 
-  auxiliaryParameters.enemyPlanes.forEach(enemyPlane => {
-    enemyPlane.update();
-    enemyPlane.newPos();
-    enemyPlane.checkTheGoal();
-  });
-
-  // limitation that the main aircraft does not fly out of the screen
-  auxiliaryParameters.heroPlane.posX = Math.max(
-    Math.min(auxiliaryParameters.heroPlane.posX, 584),
-    2
-  );
-
+  scoreText.update();
+  livesText.update();
   scoreText.text = 'SCORE: ' + auxiliaryParameters.playerPoints;
   livesText.text = 'LIVES: ' + auxiliaryParameters.playerHealth;
-  document.querySelector('#test').textContent =
-    auxiliaryParameters.playerPoints;
-  document.querySelector('#health').textContent =
-    auxiliaryParameters.playerHealth;
 }
 
 function keyUpHandler(event) {
