@@ -13,7 +13,11 @@ const auxiliaryParameters = {
   enemyGenerationCounter: 0,
   bullets: [],
   bulletsDistance: 0,
+  playerPoints: 0,
+  playerHealth: 6,
 };
+
+let scoreText, livesText;
 
 const myGameArea = {
   canvas: document.createElement('canvas'),
@@ -40,7 +44,27 @@ document.addEventListener('DOMContentLoaded', function() {
 function startGame() {
   auxiliaryParameters.heroPlane = new HeroPlane();
 
+  scoreText = new TextComponent('30px', 'Consolas', 'black', 15, 30);
+  livesText = new TextComponent('30px', 'Consolas', 'black', 470, 30);
+
   myGameArea.start();
+}
+
+class TextComponent {
+  constructor(size, font, color, posX, posY) {
+    // this.type = type;
+    this.size = size;
+    this.font = font;
+    this.posX = posX;
+    this.posY = posY;
+    this.color = color;
+  }
+  update() {
+    const ctx = myGameArea.context;
+    ctx.font = this.size + ' ' + this.font;
+    ctx.fillStyle = this.color;
+    ctx.fillText(this.text, this.posX, this.posY);
+  }
 }
 
 class HeroPlane {
@@ -93,6 +117,12 @@ class EnemyPlane {
     const ctx = myGameArea.context;
     ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height);
   }
+
+  checkTheGoal() {
+    if (this.posY === 590) {
+      subtractThePlayerHealth();
+    }
+  }
 }
 
 class Bullet {
@@ -114,6 +144,28 @@ class Bullet {
     if (this.posY < 10) {
       auxiliaryParameters.bullets.shift();
     }
+  }
+
+  checkCollision() {
+    auxiliaryParameters.enemyPlanes.forEach((plane, i) => {
+      const isCollision = AABBIntersect(
+        this.posX,
+        this.posY,
+        this.r,
+        this.r,
+        plane.posX,
+        plane.posY,
+        plane.width,
+        plane.height
+      );
+      if (isCollision) {
+        auxiliaryParameters.enemyPlanes.splice(i, 1);
+        auxiliaryParameters.bullets = auxiliaryParameters.bullets.filter(
+          bullet => bullet.posY !== this.posY
+        );
+        addPlayerPoint(1);
+      }
+    });
   }
 }
 
@@ -137,10 +189,12 @@ function updateGameArea() {
 
   auxiliaryParameters.heroPlane.newPos();
   auxiliaryParameters.heroPlane.update();
-
+  scoreText.update();
+  livesText.update();
   auxiliaryParameters.bullets.forEach(bullet => {
     bullet.update();
     bullet.newPos();
+    bullet.checkCollision();
   });
 
   if (
@@ -153,6 +207,7 @@ function updateGameArea() {
   auxiliaryParameters.enemyPlanes.forEach(enemyPlane => {
     enemyPlane.update();
     enemyPlane.newPos();
+    enemyPlane.checkTheGoal();
   });
 
   // limitation that the main aircraft does not fly out of the screen
@@ -160,6 +215,13 @@ function updateGameArea() {
     Math.min(auxiliaryParameters.heroPlane.posX, 584),
     2
   );
+
+  scoreText.text = 'SCORE: ' + auxiliaryParameters.playerPoints;
+  livesText.text = 'LIVES: ' + auxiliaryParameters.playerHealth;
+  document.querySelector('#test').textContent =
+    auxiliaryParameters.playerPoints;
+  document.querySelector('#health').textContent =
+    auxiliaryParameters.playerHealth;
 }
 
 function keyUpHandler(event) {
@@ -203,3 +265,17 @@ function keyDownHandler(event) {
     auxiliaryParameters.spacePressed = true;
   }
 }
+
+function AABBIntersect(ax, ay, aw, ah, bx, by, bw, bh) {
+  return ax < bx + bw && bx < ax + aw && ay < by + bh && by < ay + ah;
+}
+
+function addPlayerPoint(value) {
+  auxiliaryParameters.playerPoints += value;
+}
+
+function subtractThePlayerHealth() {
+  auxiliaryParameters.playerHealth--;
+}
+
+console.log(scoreText);
