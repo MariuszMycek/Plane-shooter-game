@@ -14,7 +14,9 @@ export default class TextComponent {
     const ctx = myGameArea.context;
     ctx.font = this.size + ' ' + this.font;
     ctx.fillStyle = this.color;
+    ctx.strokeStyle = 'white';
     ctx.fillText(this.text, this.posX, this.posY);
+    ctx.strokeText(this.text, this.posX, this.posY);
   }
 
   setText(text) {

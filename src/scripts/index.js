@@ -49,7 +49,7 @@ function startGame() {
   components.endView = new EndView(236, -50);
   components.scoreText = new TextComponent(15, 30);
   components.livesText = new TextComponent(470, 30);
-  components.background = [new Background(0), new Background(-823)];
+  components.background = [new Background(0), new Background(-822)];
 
   myGameArea.start();
 }
