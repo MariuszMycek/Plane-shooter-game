@@ -9,3 +9,12 @@ canvas {
   display: block;
   margin: 0 auto;
 }
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  margin-top: 20px;
+}

@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack:///./src/styles/index.scss"],"names":[],"mappings":"AAAA;AACA,aAAa;;AAEb;AACA;AACA;AACA;AACA,iBAAiB","file":"bundle.css","sourcesContent":["body {\n  color: red; }\n\ncanvas {\n  border: 1px solid #d3d3d3;\n  background-color: #f1f1f1;\n  display: block;\n  margin: 0 auto; }\n"],"sourceRoot":""}
