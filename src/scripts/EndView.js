@@ -14,10 +14,10 @@ export default class EndView extends TextComponent {
     if (this.posY < 300) {
       this.posY += this.speedY;
     }
-    if (this.counter === 560) {
-      parameters.gameStatus = 'stop';
-      this.counter = 0;
-      this.posY = -50;
-    }
+    // if (this.counter === 560) {
+    //   parameters.gameStatus = 'stop';
+    //   this.counter = 0;
+    //   this.posY = -50;
+    // }
   }
 }

@@ -14,7 +14,7 @@ export default class Background {
   newPos() {
     if (parameters.gameStatus === 'running') {
       this.posY += this.speedY;
-      if (this.posY === 824) {
+      if (this.posY === 822) {
         this.posY = -822;
       }
     }

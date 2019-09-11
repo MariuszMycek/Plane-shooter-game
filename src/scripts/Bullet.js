@@ -13,6 +13,9 @@ export default class Bullet {
     const ctx = myGameArea.context;
     ctx.beginPath();
     ctx.arc(this.posX, this.posY, this.r, this.startAngle, this.endAngle);
+    ctx.fillStyle = "yellow";
+    ctx.strokeStyle = "black";
+    ctx.stroke();
     ctx.fill();
   }
   newPos() {
