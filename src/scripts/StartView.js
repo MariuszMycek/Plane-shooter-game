@@ -7,7 +7,7 @@ export default class StartView extends TextComponent {
     super(posX, posY, size, font, counter);
     this.speedX = 2;
     this.color = 'red';
-    this.text = 'PLANE SHOOTER';
+    this.text = 'ALIEN SHOOTER';
   }
 
   newPos() {
