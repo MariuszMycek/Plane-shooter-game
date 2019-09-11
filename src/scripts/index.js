@@ -3,6 +3,7 @@ import EnemyPlane from './EnemyPlane';
 import TextComponent from './TextComponent';
 import StartView from './StartView';
 import EndView from './EndView';
+import Background from './Background';
 import { keyDownHandler, keyUpHandler } from './helpers';
 
 import '../styles/index.scss';
@@ -25,6 +26,7 @@ export const components = {
   heroPlane: null,
   enemyPlanes: [],
   bullets: [],
+  background: [],
 };
 
 export const myGameArea = {
@@ -45,9 +47,9 @@ function startGame() {
   components.heroPlane = new HeroPlane();
   components.startView = new StartView(-400, 300);
   components.endView = new EndView(236, -50);
-
   components.scoreText = new TextComponent(15, 30);
   components.livesText = new TextComponent(470, 30);
+  components.background = [new Background(0), new Background(-823)];
 
   myGameArea.start();
 }
@@ -66,6 +68,11 @@ function generateEnemyPlane() {
 
 function updateGameArea() {
   myGameArea.clear();
+
+  components.background.forEach(bgElement => {
+    bgElement.newPos();
+    bgElement.update();
+  });
 
   switch (parameters.gameStatus) {
     case 'start': {
@@ -113,6 +120,7 @@ function updateGameArea() {
       break;
     }
   }
+
   components.scoreText.update();
   components.scoreText.setText('SCORE: ' + parameters.playerPoints);
   components.livesText.update();

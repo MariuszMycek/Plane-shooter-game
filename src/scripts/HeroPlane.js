@@ -6,10 +6,10 @@ export default class HeroPlane {
   constructor() {
     this.image = new Image();
     this.image.src = heroPlaneSrc;
-    this.width = 32;
-    this.height = 32;
+    this.width = 48;
+    this.height = 48;
     this.speedX = 0;
-    this.posX = 301;
+    this.posX = 285;
     this.posY = 550;
   }
   update() {
@@ -18,11 +18,11 @@ export default class HeroPlane {
   }
   newPos() {
     // limitation that the main aircraft does not fly out of the screen
-    this.posX = Math.max(Math.min(this.posX + this.speedX, 584), 2);
+    this.posX = Math.max(Math.min(this.posX + this.speedX, 572), -2);
   }
 
   shootTheBullet() {
-    components.bullets.push(new Bullet(this.posX + 16, this.posY));
+    components.bullets.push(new Bullet(this.posX + 24, this.posY));
     parameters.bulletsDistance = 0;
   }
 }
