@@ -1,17 +1,29 @@
-import HeroPlane from './HeroPlane';
-import EnemyPlane from './EnemyPlane';
-import TextComponent from './TextComponent';
-import StartView from './StartView';
-import EndView from './EndView';
-import Background from './Background';
-import { keyDownHandler, keyUpHandler } from './helpers';
+import { keyDownHandler, keyUpHandler, changePhase } from './helpers';
+import {
+  renderBackground,
+  renderTitle,
+  renderHeroPlane,
+  renderBullets,
+  renderEnemyPlanes,
+  renderOutro,
+  renderScore,
+  renderLives,
+} from './renders';
+
+import {
+  generateHeroBullet,
+  generateEnemyPlane,
+  initializeObjects,
+} from './objectGenerators';
+import { PHASES } from './constants';
 
 import '../styles/index.scss';
 
 const startButton = document.querySelector('#startButton');
 
 export const parameters = {
-  gameStatus: 'stop',
+  phaseCounter: 0,
+  gamePhase: PHASES.stop,
   leftPressed: false,
   rightPressed: false,
   spacePressed: false,
@@ -44,87 +56,51 @@ export const myGameArea = {
 };
 
 function startGame() {
-  components.heroPlane = new HeroPlane();
-  components.startView = new StartView(-400, 300);
-  components.endView = new EndView(236, -50);
-  components.scoreText = new TextComponent(15, 30);
-  components.livesText = new TextComponent(470, 30);
-  components.background = [new Background(0), new Background(-822)];
-
+  initializeObjects();
   myGameArea.start();
 }
 
-function generateEnemyPlane() {
-  if (
-    parameters.enemyGenerationCounter >
-    Math.floor(Math.random() * 4000) + 50
-  ) {
-    components.enemyPlanes.push(
-      new EnemyPlane(Math.floor(Math.random() * 588), -40)
-    );
-    parameters.enemyGenerationCounter = 0;
-  }
-}
-
 function updateGameArea() {
+  parameters.phaseCounter++;
+
   myGameArea.clear();
 
-  components.background.forEach(bgElement => {
-    bgElement.newPos();
-    bgElement.update();
-  });
+  renderBackground();
 
-  switch (parameters.gameStatus) {
-    case 'start': {
-      components.startView.update();
-      components.startView.newPos();
+  switch (parameters.gamePhase) {
+    case PHASES.start: {
+      renderTitle();
       break;
     }
 
-    case 'running': {
+    case PHASES.running: {
       if (parameters.playerHealth > 0) {
+        // update parameters
         parameters.enemyGenerationCounter += 1;
-        generateEnemyPlane();
         parameters.bulletsDistance += 3;
 
-        components.heroPlane.newPos();
-        components.heroPlane.update();
+        // generating objects
+        generateEnemyPlane();
+        generateHeroBullet();
 
-        components.bullets.forEach(bullet => {
-          bullet.update();
-          bullet.newPos();
-          bullet.checkCollision();
-        });
-
-        if (
-          parameters.spacePressed &&
-          parameters.bulletsDistance > 50 &&
-          components.bullets.length <= 15
-        ) {
-          components.heroPlane.shootTheBullet();
-        }
-
-        components.enemyPlanes.forEach(enemyPlane => {
-          enemyPlane.update();
-          enemyPlane.newPos();
-          enemyPlane.checkTheGoal();
-        });
+        // rendering objects
+        renderHeroPlane();
+        renderBullets();
+        renderEnemyPlanes();
       } else {
-        parameters.gameStatus = 'end';
+        changePhase(PHASES.end);
       }
       break;
     }
-    case 'end': {
-      components.endView.update();
-      components.endView.newPos();
+
+    case PHASES.end: {
+      renderOutro();
       break;
     }
   }
 
-  components.scoreText.update();
-  components.scoreText.setText('SCORE: ' + parameters.playerPoints);
-  components.livesText.update();
-  components.livesText.setText('LIVES: ' + parameters.playerHealth);
+  renderScore();
+  renderLives();
 }
 
 document.addEventListener('keydown', keyDownHandler);
@@ -134,5 +110,5 @@ document.addEventListener('keyup', keyUpHandler);
 document.addEventListener('DOMContentLoaded', () => startGame());
 
 startButton.addEventListener('click', () => {
-  parameters.gameStatus = 'start';
+  changePhase(PHASES.start);
 });
