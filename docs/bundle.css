@@ -1,9 +1,8 @@
 body {
-  color: red; }
+  color: red;
+  background-image: url(public/assets/images/hexellence.png); }
 
 canvas {
-  border: 1px solid #d3d3d3;
-  background-color: #f1f1f1;
   display: block;
   margin: 0 auto; }
 

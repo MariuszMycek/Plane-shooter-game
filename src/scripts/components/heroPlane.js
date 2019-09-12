@@ -10,13 +10,16 @@ export default class HeroPlane {
     this.height = 48;
     this.speedX = 0;
     this.posX = 285;
-    this.posY = 550;
+    this.posY = 650;
   }
   update() {
     const ctx = myGameArea.context;
     ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height);
   }
   newPos() {
+    if (this.posY > 550) {
+      this.posY--;
+    }
     // limitation that the main aircraft does not fly out of the screen
     this.posX = Math.max(Math.min(this.posX + this.speedX, 572), -2);
   }

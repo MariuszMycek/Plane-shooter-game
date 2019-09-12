@@ -8,6 +8,7 @@ import {
   renderOutro,
   renderScore,
   renderLives,
+  renderMenu,
 } from './renders';
 
 import {
@@ -19,11 +20,11 @@ import { PHASES } from './constants';
 
 import '../styles/index.scss';
 
-const startButton = document.querySelector('#startButton');
+// const startButton = document.querySelector('#startButton');
 
 export const parameters = {
   phaseCounter: 0,
-  gamePhase: PHASES.stop,
+  gamePhase: PHASES.menu,
   leftPressed: false,
   rightPressed: false,
   spacePressed: false,
@@ -32,6 +33,7 @@ export const parameters = {
   bulletsDistance: 0,
   playerPoints: 0,
   playerHealth: 6,
+  activeMenuItemIndex: 0,
 };
 
 export const components = {
@@ -39,6 +41,7 @@ export const components = {
   enemyPlanes: [],
   bullets: [],
   background: [],
+  menu: [],
 };
 
 export const myGameArea = {
@@ -47,7 +50,9 @@ export const myGameArea = {
     this.canvas.width = 618;
     this.canvas.height = 620;
     this.context = this.canvas.getContext('2d');
-    document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+    document
+      .querySelector('#myCanvas')
+      .appendChild(this.canvas, document.body.childNodes[0]);
     this.interval = setInterval(updateGameArea, 10);
   },
   clear: function() {
@@ -58,6 +63,7 @@ export const myGameArea = {
 function startGame() {
   initializeObjects();
   myGameArea.start();
+  console.log(myGameArea);
 }
 
 function updateGameArea() {
@@ -68,6 +74,11 @@ function updateGameArea() {
   renderBackground();
 
   switch (parameters.gamePhase) {
+    case PHASES.menu: {
+      renderTitle();
+      renderMenu();
+      break;
+    }
     case PHASES.start: {
       renderTitle();
       break;
@@ -109,6 +120,6 @@ document.addEventListener('keyup', keyUpHandler);
 
 document.addEventListener('DOMContentLoaded', () => startGame());
 
-startButton.addEventListener('click', () => {
-  changePhase(PHASES.start);
-});
+// startButton.addEventListener('click', () => {
+//   changePhase(PHASES.menu);
+// });

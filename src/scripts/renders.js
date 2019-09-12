@@ -12,6 +12,12 @@ export function renderTitle() {
   components.tilte.newPos();
 }
 
+export function renderMenu() {
+  components.menu.forEach(item => {
+    item.update();
+    item.newPos();
+  });
+}
 export function renderHeroPlane() {
   components.heroPlane.newPos();
   components.heroPlane.update();
@@ -34,8 +40,10 @@ export function renderEnemyPlanes() {
 }
 
 export function renderOutro() {
-  components.endView.update();
-  components.endView.newPos();
+  components.gameOver.update();
+  components.gameOver.newPos();
+  components.endGameInfo.update();
+  components.endGameInfo.newPos();
 }
 
 export function renderScore() {

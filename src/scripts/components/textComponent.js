@@ -3,6 +3,7 @@ import { myGameArea } from '../index';
 export default class TextComponent {
   constructor(posX, posY, text) {
     this.size = '30px';
+
     this.font = 'Consolas';
     this.posX = posX;
     this.posY = posY;
@@ -13,6 +14,10 @@ export default class TextComponent {
   update() {
     const ctx = myGameArea.context;
     ctx.font = this.size + ' ' + this.font;
+    ctx.scale(1, 1);
+
+    // ctx.shadowBlur = 0;
+    // ctx.shadowColor = 'white';
     ctx.fillStyle = this.color;
     ctx.strokeStyle = 'white';
     ctx.fillText(this.text, this.posX, this.posY);
