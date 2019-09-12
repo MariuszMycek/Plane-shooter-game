@@ -1,4 +1,4 @@
-import TextComponent from './TextComponent';
+import TextComponent from './textComponent';
 import { components, parameters } from '../index';
 
 export default class EndView extends TextComponent {

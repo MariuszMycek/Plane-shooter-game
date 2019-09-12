@@ -1,4 +1,4 @@
-import TextComponent from './TextComponent';
+import TextComponent from './textComponent';
 import { components, parameters } from '../index';
 import { resetParams, changePhase } from '../helpers';
 import { PHASES } from '../constants';
