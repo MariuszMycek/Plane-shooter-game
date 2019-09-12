@@ -1,4 +1,4 @@
-import { myGameArea } from './index';
+import { myGameArea } from '../index';
 
 export default class TextComponent {
   constructor(posX, posY, text) {

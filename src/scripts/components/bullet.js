@@ -1,5 +1,5 @@
-import { myGameArea, parameters, components } from './index';
-import { AABBIntersect, addPlayerPoint } from './helpers';
+import { myGameArea, parameters, components } from '../index';
+import { AABBIntersect, addPlayerPoint } from '../helpers';
 
 export default class Bullet {
   constructor(posX, posY) {

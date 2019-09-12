@@ -1,6 +1,6 @@
-import bgImage from '../../public/assets/images/gameBG.png';
-import { myGameArea, parameters, components } from './index';
-import { PHASES } from './constants';
+import bgImage from 'public/assets/images/gameBG.png';
+import { myGameArea, parameters, components } from '../index';
+import { PHASES } from '../constants';
 
 export default class Background {
   constructor(posY) {
