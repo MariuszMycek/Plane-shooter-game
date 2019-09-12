@@ -1,10 +1,10 @@
 import { components, parameters } from './index';
-import EnemyPlane from './EnemyPlane';
-import HeroPlane from './HeroPlane';
-import TextComponent from './TextComponent';
-import Tilte from './Tilte';
-import EndView from './EndView';
-import Background from './Background';
+import EnemyPlane from './components/enemyPlane';
+import HeroPlane from './components/heroPlane';
+import TextComponent from './components/textComponent';
+import Tilte from './components/tilte';
+import EndView from './components/endView';
+import Background from './components/background';
 
 export function initializeObjects() {
   components.heroPlane = new HeroPlane();

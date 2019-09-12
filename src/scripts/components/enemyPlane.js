@@ -1,6 +1,6 @@
-import enemyPlaneSrc from '../../public/assets/images/enemyPlane.png';
-import { myGameArea, parameters, components } from './index';
-import { subtractThePlayerHealth } from './helpers';
+import enemyPlaneSrc from 'public/assets/images/enemyPlane.png';
+import { myGameArea, parameters, components } from '../index';
+import { subtractThePlayerHealth } from '../helpers';
 
 export default class EnemyPlane {
   constructor(posX, posY) {

@@ -1,7 +1,7 @@
-import TextComponent from './TextComponent';
-import { components, parameters } from './index';
-import { resetParams, changePhase } from './helpers';
-import { PHASES } from './constants';
+import TextComponent from './textComponent';
+import { components, parameters } from '../index';
+import { resetParams, changePhase } from '../helpers';
+import { PHASES } from '../constants';
 
 export default class Tilte extends TextComponent {
   constructor(posX, posY, size, font, counter) {

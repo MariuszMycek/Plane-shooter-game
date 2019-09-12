@@ -29,6 +29,7 @@ module.exports = {
   resolve: {
     alias: {
       '~': Path.resolve(__dirname, '../src'),
+      public: Path.resolve(__dirname, '../public'),
     },
   },
   module: {
