@@ -1,8 +1,9 @@
 import TextComponent from './TextComponent';
 import { components, parameters } from './index';
-import { resetParams } from './helpers';
+import { resetParams, changePhase } from './helpers';
+import { PHASES } from './constants';
 
-export default class StartView extends TextComponent {
+export default class Tilte extends TextComponent {
   constructor(posX, posY, size, font, counter) {
     super(posX, posY, size, font, counter);
     this.speedX = 2;
@@ -11,21 +12,17 @@ export default class StartView extends TextComponent {
   }
 
   newPos() {
-    super.count();
-    if (this.posX < 203) {
-      this.moveRigth();
-      return;
-    }
+    this.count();
 
-    if (this.counter > 560) {
+    if (this.counter > 280) {
       this.moveRigth();
     }
 
-    if (this.counter === 1120) {
+    if (this.counter === 560) {
       resetParams();
-      parameters.gameStatus = 'running';
-      super.resetCounter();
-      this.posX = -400;
+      changePhase(PHASES.running);
+      this.resetCounter();
+      this.posX = 203;
       return;
     }
   }

@@ -21,6 +21,12 @@ export function subtractThePlayerHealth() {
   parameters.playerHealth--;
 }
 
+export function changePhase(phase) {
+  parameters.gamePhase = phase;
+  parameters.phaseCounter = 0;
+}
+
+// steering
 export function keyUpHandler(event) {
   event.preventDefault();
   let key = event.keyCode;

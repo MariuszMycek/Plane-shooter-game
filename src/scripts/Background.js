@@ -1,5 +1,6 @@
 import bgImage from '../../public/assets/images/gameBG.png';
 import { myGameArea, parameters, components } from './index';
+import { PHASES } from './constants';
 
 export default class Background {
   constructor(posY) {
@@ -12,7 +13,7 @@ export default class Background {
     this.posY = posY;
   }
   newPos() {
-    if (parameters.gameStatus === 'running') {
+    if (parameters.gamePhase === PHASES.running) {
       this.posY += this.speedY;
       if (this.posY === 822) {
         this.posY = -822;
