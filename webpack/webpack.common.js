@@ -5,10 +5,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
+    // firebase: Path.resolve(__dirname, '../src/scripts/firebase.js'),
     app: Path.resolve(__dirname, '../src/scripts/index.js'),
   },
   output: {
-    path: Path.join(__dirname, '../docs'),
+    path: Path.join(__dirname, '../(docs)'),
     filename: 'js/[name].js',
   },
   optimization: {
