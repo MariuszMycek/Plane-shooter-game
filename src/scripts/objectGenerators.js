@@ -10,6 +10,7 @@ import { menu } from './components/menu';
 import { background } from './components/background';
 import { resultSaving } from './components/resultSaving';
 import { WEAPON_TYPE } from './constants';
+import BonusCrate from './components/bonusCrate';
 // import TextInput from './components/textInput';
 // import { gameOverView } from './views/gameOver';
 
@@ -48,6 +49,16 @@ export function generateHeroBullet(weaponType) {
         }
         break;
       }
+
+      case WEAPON_TYPE.piercingBullet: {
+        if (
+          parameters.bulletsDistance > 50 &&
+          components.bullets.length <= 16
+        ) {
+          components.heroPlane.shootSingleBullet();
+        }
+        break;
+      }
     }
   }
 }
@@ -58,8 +69,21 @@ export function generateEnemyPlane() {
     Math.floor(Math.random() * 4000) + 50
   ) {
     components.enemyPlanes.push(
-      new EnemyPlane(Math.floor(Math.random() * 588), -40)
+      new EnemyPlane(Math.floor(Math.random() * 582 + 2), -40)
     );
     parameters.enemyGenerationCounter = 0;
+  }
+}
+
+export function generateBonusCrate() {
+  if (
+    parameters.bonusCrateGenerationCounter >
+    // Math.floor(Math.random() * 10000)
+    Math.floor(Math.random() * 1000000) + 5000
+  ) {
+    components.bonusCrates.push(
+      new BonusCrate(Math.floor(Math.random() * 582 + 2), -40)
+    );
+    parameters.bonusCrateGenerationCounter = 0;
   }
 }

@@ -5,14 +5,15 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background-image: url('../../public/assets/images/hexellence.png');
 }
+
 canvas {
   display: block;
   margin: 0 auto;
 }
 
 .container {
-  display: flex;
-  justify-content: center;
+  margin: 0 auto;
+  max-width: 618px;
 }
 
 .button {
@@ -23,9 +24,44 @@ canvas {
   text-align: right;
 }
 
-.info {
+.header {
+  text-align: center;
+}
+
+.section {
+  margin-bottom: 25px;
+
+  .item {
+    display: flex;
+    align-items: center;
+
+    .image {
+      display: flex;
+      align-items: center;
+      margin-right: 15px;
+
+      img {
+        width: 38px;
+        height: 38px;
+      }
+    }
+
+    .description {
+      flex: auto;
+
+      span {
+        font-weight: bold;
+      }
+    }
+  }
+
+  h4 {
+    margin-bottom: 5px;
+  }
+}
+
+.controls {
   p {
-    text-align: center;
     span {
       font-weight: bold;
     }

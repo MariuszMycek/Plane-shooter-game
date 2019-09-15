@@ -11,4 +11,5 @@ export const PHASES = {
 export const WEAPON_TYPE = {
   singleBullet: 'singleBullet',
   doubleBullet: 'doubleBullet',
+  piercingBullet: 'piercingBullet',
 };
