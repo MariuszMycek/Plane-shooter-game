@@ -1,8 +1,9 @@
 import { parameters, components } from './index';
-import { PHASES } from './constants';
+import { PHASES, WEAPON_TYPE } from './constants';
 
 import { saveTopScores, getTopScores } from './firebase';
 import { topScores } from './components/topScores';
+
 export function AABBIntersect(ax, ay, aw, ah, bx, by, bw, bh) {
   return ax < bx + bw && bx < ax + aw && ay < by + bh && by < ay + ah;
 }
@@ -18,6 +19,18 @@ export function resetParams() {
   components.endGameInfo.posY = 650;
   components.heroPlane.posX = 285;
   components.heroPlane.posY = 650;
+  components.bonusCrates = [];
+}
+
+export function changeWeapon() {
+  // random number 0-99
+  const randomNumber = Math.floor(Math.random() * 100);
+
+  if (randomNumber > 0 && randomNumber <= 29) {
+    parameters.weaponType = WEAPON_TYPE.doubleBullet;
+  } else if (randomNumber > 29 && randomNumber <= 99) {
+    parameters.weaponType = WEAPON_TYPE.piercingBullet;
+  }
 }
 
 export function addPlayerPoint(value) {
@@ -26,6 +39,7 @@ export function addPlayerPoint(value) {
 
 export function subtractThePlayerHealth() {
   parameters.playerHealth--;
+  parameters.weaponType = WEAPON_TYPE.singleBullet;
 }
 
 export function changePhase(phase) {

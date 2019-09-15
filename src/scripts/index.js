@@ -11,12 +11,14 @@ import {
   renderMenu,
   renderTopScores,
   renderResultSaving,
+  renderBonusCrates,
 } from './renders';
 
 import {
   generateHeroBullet,
   generateEnemyPlane,
   initializeObjects,
+  generateBonusCrate,
 } from './objectGenerators';
 
 import { PHASES, WEAPON_TYPE } from './constants';
@@ -37,6 +39,7 @@ export const parameters = {
   spacePressed: false,
   directionFactor: [-1, 0, 1],
   enemyGenerationCounter: 0,
+  bonusCrateGenerationCounter: 0,
   bulletsDistance: 0,
   playerPoints: 0,
   playerHealth: 6,
@@ -49,6 +52,7 @@ export const parameters = {
 export const components = {
   heroPlane: null,
   enemyPlanes: [],
+  bonusCrates: [],
   bullets: [],
   background: [],
   menu: [],
@@ -104,14 +108,17 @@ function updateGameArea() {
     case PHASES.running: {
       if (parameters.playerHealth > 0) {
         // update parameters
-        parameters.enemyGenerationCounter += 1;
+        parameters.enemyGenerationCounter++;
+        parameters.bonusCrateGenerationCounter++;
         parameters.bulletsDistance += 3;
 
         // generating objects
+        generateBonusCrate();
         generateEnemyPlane();
         generateHeroBullet(parameters.weaponType);
 
         // rendering objects
+        renderBonusCrates();
         renderHeroPlane();
         renderBullets();
         renderEnemyPlanes();

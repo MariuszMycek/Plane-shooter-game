@@ -51,6 +51,13 @@ export function renderEnemyPlanes() {
   });
 }
 
+export function renderBonusCrates() {
+  components.bonusCrates.forEach(crate => {
+    crate.newPos();
+    crate.update();
+    crate.checkCollision();
+  });
+}
 export function renderOutro() {
   components.gameOver.update();
   components.gameOver.newPos();

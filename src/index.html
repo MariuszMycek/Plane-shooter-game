@@ -4,19 +4,63 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Plane shooter game</title>
+  <title>Alien shooter game</title>
 </head>
 
 <body>
   <!-- <div class="container">
     <button class="button" id='startButton'>RUN THE GAME</button>
   </div> -->
-  <h4 class="ver-info">ver.: 0.3(beta)</h4>
+  <h4 class="ver-info">ver.: 0.4(beta)</h4>
+  <div class="container">
+    <h1 class="header">ALIEN SHOOTER</h1>
+  </div>
   <div id="myCanvas"></div>
-  <div class="info">
-    <p>Press <span>SPACE</span> to shot and accept option</p>
-    <p>Press <span>UP, DOWN</span> arrows to change menu option</p>
-    <p>Press <span>LEFT, RIGHT</span> arrows to move the plane</p>
+  <div class="container">
+    <div class="controls section">
+      <h4>Controls:</h4>
+      <p>Press <span>SPACE</span> to shot and accept option</p>
+      <p>Press <span>UP, DOWN</span> arrows to change menu option</p>
+      <p>Press <span>LEFT, RIGHT</span> arrows to move the plane</p>
+    </div>
+    <div class="enemies section">
+      <h4>Enemies:</h4>
+      <div class='item'>
+        <div class="image">
+          <img src="../public/assets/images/enemyPlane.png" alt="enemy plane">
+        </div>
+        <div class="description">
+          <p>A basic alien landing ship.
+            It can't shoot, but when it crosses the line of defense, you lose one life.</p>
+        </div>
+      </div>
+    </div>
+    <div class="section weapons">
+      <h4>Weapons:</h4>
+      <div class='item'>
+        <div class="image"><img src="../public/assets/images/singleBulletSnapshot.png" alt="single bullet"></div>
+        <p class="description"><span>Single bullet cannon</span> - a basic weapon for your ship. Max amount of bullets
+          at the same time - 15 pcs.</p>
+      </div>
+      <div class='item'>
+        <div class="image"><img src="../public/assets/images/doubleBulletSnapshot.png" alt="double bullet"></div>
+        <p class="description"><span>Double bullet cannon</span> - improved version of single bullet cannon. Shoots 2
+          bullets at the same time. Max amount of bullets at the same time - 24 pcs.</p>
+      </div>
+      <div class='item'>
+        <div class="image"><img src="../public/assets/images/piercingBulletSnapshot.png" alt="piercing bullet"></div>
+        <p class="description"><span>Piercing single bullet cannon</span> - improved version of single bullet cannon.
+          Shoots 1 piercing bullet at the same time. Max amount of bullets at the same time - 16 pcs.</p>
+      </div>
+    </div>
+    <div class="bonuses section">
+      <h4>Bonuses:</h4>
+      <div class='item'>
+        <div class="image"><img src="../public/assets/images/crate.png" alt="bonus crate"></div>
+        <p class="description">Sometimes they lie on the ground. They contains random bonus weapon for your ship. But be
+          careful - if you lose your life, you also lose your bonus weapon.</p>
+      </div>
+    </div>
   </div>
   <script src="https://www.gstatic.com/firebasejs/6.6.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.6.0/firebase-firestore.js"></script>
