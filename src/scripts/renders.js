@@ -15,9 +15,21 @@ export function renderTitle() {
 export function renderMenu() {
   components.menu.forEach(item => {
     item.update();
-    item.newPos();
   });
 }
+
+export function renderResultSaving() {
+  components.resultSaving[0].update();
+  components.resultSaving[1].updateText();
+  components.resultSaving[1].update();
+}
+
+export function renderTopScores() {
+  components.topScores.forEach(item => {
+    item.update();
+  });
+}
+
 export function renderHeroPlane() {
   components.heroPlane.newPos();
   components.heroPlane.update();

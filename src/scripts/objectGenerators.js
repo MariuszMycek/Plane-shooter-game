@@ -4,31 +4,51 @@ import HeroPlane from './components/heroPlane';
 import TextComponent from './components/textComponent';
 import Tilte from './components/tilte';
 import GameOver from './components/gameOver';
-import Background from './components/background';
-import MenuItem from './components/menuItem';
 import EndGameInfo from './components/endGameInfo';
+import { topScores } from './components/topScores';
+import { menu } from './components/menu';
+import { background } from './components/background';
+import { resultSaving } from './components/resultSaving';
+import { WEAPON_TYPE } from './constants';
+// import TextInput from './components/textInput';
+// import { gameOverView } from './views/gameOver';
 
 export function initializeObjects() {
   components.heroPlane = new HeroPlane();
-  components.tilte = new Tilte(null, 300);
-  components.gameOver = new GameOver(null, -50);
-  components.endGameInfo = new EndGameInfo(null, 650);
+  components.tilte = new Tilte();
+  components.gameOver = new GameOver();
+  components.endGameInfo = new EndGameInfo();
   components.scoreText = new TextComponent(15, 30);
   components.livesText = new TextComponent(470, 30);
-  components.background = [new Background(0), new Background(-822)];
-  components.menu = [
-    new MenuItem(203, 400, 'NEW GAME', 0),
-    new MenuItem(203, 450, 'RECORDS', 1),
-  ];
+  components.background = [...background()];
+  components.menu = [...menu()];
+  components.topScores = [...topScores()];
+  components.resultSaving = [...resultSaving()];
 }
 
-export function generateHeroBullet() {
-  if (
-    parameters.spacePressed &&
-    parameters.bulletsDistance > 50 &&
-    components.bullets.length <= 15
-  ) {
-    components.heroPlane.shootTheBullet();
+export function generateHeroBullet(weaponType) {
+  if (parameters.spacePressed) {
+    switch (weaponType) {
+      case WEAPON_TYPE.singleBullet: {
+        if (
+          parameters.bulletsDistance > 50 &&
+          components.bullets.length <= 15
+        ) {
+          components.heroPlane.shootSingleBullet();
+        }
+        break;
+      }
+
+      case WEAPON_TYPE.doubleBullet: {
+        if (
+          parameters.bulletsDistance > 50 &&
+          components.bullets.length <= 24
+        ) {
+          components.heroPlane.shootDoubleBullet();
+        }
+        break;
+      }
+    }
   }
 }
 

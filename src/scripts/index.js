@@ -9,6 +9,8 @@ import {
   renderScore,
   renderLives,
   renderMenu,
+  renderTopScores,
+  renderResultSaving,
 } from './renders';
 
 import {
@@ -16,9 +18,14 @@ import {
   generateEnemyPlane,
   initializeObjects,
 } from './objectGenerators';
-import { PHASES } from './constants';
+
+import { PHASES, WEAPON_TYPE } from './constants';
+
+import { config } from './config';
 
 import '../styles/index.scss';
+
+import { getTopScores } from './firebase';
 
 // const startButton = document.querySelector('#startButton');
 
@@ -34,6 +41,9 @@ export const parameters = {
   playerPoints: 0,
   playerHealth: 6,
   activeMenuItemIndex: 0,
+  topScores: [],
+  inputText: '',
+  weaponType: WEAPON_TYPE.singleBullet,
 };
 
 export const components = {
@@ -42,13 +52,14 @@ export const components = {
   bullets: [],
   background: [],
   menu: [],
+  topScores: [],
 };
 
 export const myGameArea = {
   canvas: document.createElement('canvas'),
   start: function() {
-    this.canvas.width = 618;
-    this.canvas.height = 620;
+    this.canvas.width = config.canvasWidth;
+    this.canvas.height = config.canvasHeight;
     this.context = this.canvas.getContext('2d');
     document
       .querySelector('#myCanvas')
@@ -63,7 +74,6 @@ export const myGameArea = {
 function startGame() {
   initializeObjects();
   myGameArea.start();
-  console.log(myGameArea);
 }
 
 function updateGameArea() {
@@ -79,6 +89,13 @@ function updateGameArea() {
       renderMenu();
       break;
     }
+
+    case PHASES.topScores: {
+      renderTopScores();
+
+      break;
+    }
+
     case PHASES.start: {
       renderTitle();
       break;
@@ -92,15 +109,26 @@ function updateGameArea() {
 
         // generating objects
         generateEnemyPlane();
-        generateHeroBullet();
+        generateHeroBullet(parameters.weaponType);
 
         // rendering objects
         renderHeroPlane();
         renderBullets();
         renderEnemyPlanes();
       } else {
-        changePhase(PHASES.end);
+        const { topScores, playerPoints } = parameters;
+        const lastResult = topScores[topScores.length - 1].score;
+        if (playerPoints > lastResult) {
+          changePhase(PHASES.resultSaving);
+        } else {
+          changePhase(PHASES.end);
+        }
       }
+      break;
+    }
+
+    case PHASES.resultSaving: {
+      renderResultSaving();
       break;
     }
 
@@ -118,8 +146,6 @@ document.addEventListener('keydown', keyDownHandler);
 
 document.addEventListener('keyup', keyUpHandler);
 
-document.addEventListener('DOMContentLoaded', () => startGame());
-
-// startButton.addEventListener('click', () => {
-//   changePhase(PHASES.menu);
-// });
+window.onload = () => {
+  getTopScores().then(() => startGame());
+};
