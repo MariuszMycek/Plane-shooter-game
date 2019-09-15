@@ -2,7 +2,7 @@ import bgImage from 'public/assets/images/gameBG.png';
 import { myGameArea, parameters, components } from '../index';
 import { PHASES } from '../constants';
 
-export default class Background {
+class Background {
   constructor(posY) {
     this.image = new Image();
     this.image.src = bgImage;
@@ -24,4 +24,14 @@ export default class Background {
     const ctx = myGameArea.context;
     ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height);
   }
+}
+
+const backgroundConfig = {
+  basePosY: 0,
+};
+
+export function background() {
+  const { basePosY } = backgroundConfig;
+
+  return [new Background(basePosY), new Background(basePosY - 822)];
 }

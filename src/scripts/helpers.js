@@ -1,6 +1,8 @@
 import { parameters, components } from './index';
 import { PHASES } from './constants';
 
+import { saveTopScores, getTopScores } from './firebase';
+import { topScores } from './components/topScores';
 export function AABBIntersect(ax, ay, aw, ah, bx, by, bw, bh) {
   return ax < bx + bw && bx < ax + aw && ay < by + bh && by < ay + ah;
 }
@@ -77,10 +79,15 @@ export function keyDownHandler(event) {
           parameters.activeMenuItemIndex++;
         }
         components.menu[parameters.activeMenuItemIndex].animationCounter = 0;
-      } else if (key === 32) {
+      } else if (key === 32 || key === 13) {
         switch (parameters.activeMenuItemIndex) {
           case 0: {
-            parameters.gamePhase = PHASES.start;
+            changePhase(PHASES.start);
+            break;
+          }
+
+          case 1: {
+            changePhase(PHASES.topScores);
             break;
           }
         }
@@ -107,9 +114,39 @@ export function keyDownHandler(event) {
 
     case PHASES.end: {
       if (key === 32) {
-        parameters.gamePhase = PHASES.menu;
+        changePhase(PHASES.menu);
       }
       break;
+    }
+
+    case PHASES.topScores: {
+      if (key === 32 || key === 13) {
+        changePhase(PHASES.menu);
+      }
+      break;
+    }
+
+    case PHASES.resultSaving: {
+      if (key === 8) {
+        const str = parameters.inputText;
+        parameters.inputText = str.slice(0, str.length - 1);
+      } else if (
+        parameters.inputText.length < 13 &&
+        ((key >= 48 && key <= 57) || (key >= 65 && key <= 90) || key === 32)
+      ) {
+        parameters.inputText += String.fromCharCode(key);
+      } else if (key === 13) {
+        const record = {
+          name: parameters.inputText,
+          score: parameters.playerPoints,
+        };
+        saveTopScores(record)
+          .then(getTopScores())
+          .then(() => {
+            components.topScores = [...topScores()];
+            changePhase(PHASES.topScores);
+          });
+      }
     }
   }
 }
