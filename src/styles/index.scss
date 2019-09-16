@@ -30,7 +30,9 @@ canvas {
     background: lighten($color: #34495e, $amount: 10);
   }
 }
-
+.cache-info {
+  margin-left: 15px;
+}
 .ver-info {
   text-align: right;
 }
