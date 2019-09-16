@@ -49,9 +49,9 @@ class MenuItem extends TextComponent {
     }
   }
 
-  moveRigth() {
-    this.posX += this.speedX;
-  }
+  // moveRigth() {
+  //   this.posX += this.speedX;
+  // }
 }
 
 const viewConfig = {

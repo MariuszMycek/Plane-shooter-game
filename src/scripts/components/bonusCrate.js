@@ -1,5 +1,5 @@
 import bonusCrateSrc from 'public/assets/images/crate.png';
-import { myGameArea, parameters, components } from '../index';
+import { myGameArea, parameters, components, sounds } from '../index';
 import { AABBIntersect, changeWeapon } from '../helpers';
 
 export default class BonusCrate {
@@ -45,6 +45,7 @@ export default class BonusCrate {
       components.bonusCrates = components.bonusCrates.filter(
         crate => crate.posY !== this.posY
       );
+      sounds.bonusAcquire.play();
       changeWeapon();
     }
   }

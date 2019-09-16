@@ -1,6 +1,7 @@
 import heroPlaneSrc from 'public/assets/images/heroPlane.png';
 import Bullet from './bullet';
-import { myGameArea, parameters, components } from '../index';
+import { myGameArea, parameters, components, sounds } from '../index';
+import { WEAPON_TYPE } from '../constants';
 
 export default class HeroPlane {
   constructor() {
