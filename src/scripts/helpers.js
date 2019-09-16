@@ -1,4 +1,10 @@
-import { parameters, components, sounds } from './index';
+import {
+  parameters,
+  components,
+  sounds,
+  myGameArea,
+  updateGameArea,
+} from './index';
 import { PHASES, WEAPON_TYPE } from './constants';
 
 import { saveTopScores, getTopScores } from './firebase';
@@ -46,7 +52,10 @@ export function subtractThePlayerHealth() {
 export function changePhase(phase) {
   parameters.gamePhase = phase;
   parameters.phaseCounter = 0;
+  changePhaseSounds(phase);
+}
 
+export function changePhaseSounds(phase) {
   switch (phase) {
     case PHASES.menu: {
       break;
@@ -59,10 +68,13 @@ export function changePhase(phase) {
       break;
     }
 
+    case PHASES.resultSaving:
+
     case PHASES.end: {
       sounds.shipInterior.fade(0.3, 0, 500);
       sounds.gameOver.play();
       sounds.menuBackground.fade(0.2, 0.5, 2000);
+      break;
     }
   }
 }
@@ -95,6 +107,16 @@ export function keyUpHandler(event) {
 export function keyDownHandler(event) {
   event.preventDefault();
   let key = event.keyCode;
+
+  // game pause
+  if (key === 80) {
+    if (!myGameArea.interval) {
+      myGameArea.interval = setInterval(updateGameArea, 10);
+    } else {
+      clearInterval(myGameArea.interval);
+      myGameArea.interval = null;
+    }
+  }
 
   switch (parameters.gamePhase) {
     case PHASES.menu: {

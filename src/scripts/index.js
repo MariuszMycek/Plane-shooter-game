@@ -79,7 +79,7 @@ function startGame() {
   myGameArea.start();
 }
 
-function updateGameArea() {
+export function updateGameArea() {
   parameters.phaseCounter++;
 
   myGameArea.clear();
