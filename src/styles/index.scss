@@ -17,7 +17,18 @@ canvas {
 }
 
 .button {
-  margin-top: 20px;
+  margin-bottom: 20px;
+  border: none;
+  outline: none;
+  background: #34495e;
+  padding: 10px;
+  color: #fff;
+  min-width: 150px;
+  cursor: pointer;
+  transition: all 0.1s linear;
+  &:hover {
+    background: lighten($color: #34495e, $amount: 10);
+  }
 }
 
 .ver-info {

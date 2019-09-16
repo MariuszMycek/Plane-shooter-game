@@ -19,6 +19,7 @@ import {
   generateEnemyPlane,
   initializeObjects,
   generateBonusCrate,
+  initializeSounds,
 } from './objectGenerators';
 
 import { PHASES, WEAPON_TYPE } from './constants';
@@ -28,6 +29,7 @@ import { config } from './config';
 import '../styles/index.scss';
 
 import { getTopScores } from './firebase';
+import { Howler } from 'howler';
 
 // const startButton = document.querySelector('#startButton');
 
@@ -49,15 +51,9 @@ export const parameters = {
   weaponType: WEAPON_TYPE.singleBullet,
 };
 
-export const components = {
-  heroPlane: null,
-  enemyPlanes: [],
-  bonusCrates: [],
-  bullets: [],
-  background: [],
-  menu: [],
-  topScores: [],
-};
+export const components = {};
+
+export const sounds = {};
 
 export const myGameArea = {
   canvas: document.createElement('canvas'),
@@ -77,6 +73,9 @@ export const myGameArea = {
 
 function startGame() {
   initializeObjects();
+  initializeSounds();
+  Howler.mute(true);
+  sounds.menuBackground.play();
   myGameArea.start();
 }
 
@@ -119,8 +118,8 @@ function updateGameArea() {
 
         // rendering objects
         renderBonusCrates();
-        renderHeroPlane();
         renderBullets();
+        renderHeroPlane();
         renderEnemyPlanes();
       } else {
         const { topScores, playerPoints } = parameters;
@@ -154,5 +153,17 @@ document.addEventListener('keydown', keyDownHandler);
 document.addEventListener('keyup', keyUpHandler);
 
 window.onload = () => {
-  getTopScores().then(() => startGame());
+  getTopScores().then(() => {
+    startGame();
+  });
 };
+
+document.querySelector('#mute').addEventListener('click', e => {
+  if (Howler._muted) {
+    Howler.mute(false);
+    e.target.textContent = 'Sound: unmuted';
+  } else {
+    Howler.mute(true);
+    e.target.textContent = 'Sound: muted';
+  }
+});

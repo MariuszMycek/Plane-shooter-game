@@ -1,4 +1,4 @@
-import { myGameArea, parameters, components } from '../index';
+import { myGameArea, parameters, components, sounds } from '../index';
 import { AABBIntersect, addPlayerPoint } from '../helpers';
 import { WEAPON_TYPE } from '../constants';
 
@@ -14,20 +14,16 @@ export default class Bullet {
     const ctx = myGameArea.context;
 
     if (parameters.weaponType === WEAPON_TYPE.piercingBullet) {
-      ctx.beginPath();
-      ctx.arc(this.posX, this.posY, this.r, this.startAngle, this.endAngle);
       ctx.fillStyle = 'blue';
       ctx.strokeStyle = 'white';
-      ctx.stroke();
-      ctx.fill();
     } else {
-      ctx.beginPath();
-      ctx.arc(this.posX, this.posY, this.r, this.startAngle, this.endAngle);
       ctx.fillStyle = 'yellow';
       ctx.strokeStyle = 'black';
-      ctx.stroke();
-      ctx.fill();
     }
+    ctx.beginPath();
+    ctx.arc(this.posX, this.posY, this.r, this.startAngle, this.endAngle);
+    ctx.stroke();
+    ctx.fill();
   }
   newPos() {
     this.posY -= 1;
@@ -55,7 +51,7 @@ export default class Bullet {
             bullet => bullet.posY !== this.posY
           );
         }
-
+        sounds.basicEnemyExplosion.play();
         addPlayerPoint(1);
       }
     });

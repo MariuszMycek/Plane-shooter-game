@@ -11,9 +11,16 @@
   <!-- <div class="container">
     <button class="button" id='startButton'>RUN THE GAME</button>
   </div> -->
-  <h4 class="ver-info">ver.: 0.4(beta)</h4>
+  <h4 class="ver-info">ver.: 0.5(beta)</h4>
   <div class="container">
-    <h1 class="header">ALIEN SHOOTER</h1>
+    <div class="header">
+      <h1>ALIEN SHOOTER</h1>
+      <h4>by Mariusz Mycek</h6>
+    </div>
+
+  </div>
+  <div class="container">
+    <button id='mute' class='button'>Sound: muted</button>
   </div>
   <div id="myCanvas"></div>
   <div class="container">
@@ -57,11 +64,12 @@
       <h4>Bonuses:</h4>
       <div class='item'>
         <div class="image"><img src="../public/assets/images/crate.png" alt="bonus crate"></div>
-        <p class="description">Sometimes they lie on the ground. They contains random bonus weapon for your ship. But be
+        <p class="description">Sometimes they lie on the ground. They contain random bonus weapon for your ship. But be
           careful - if you lose your life, you also lose your bonus weapon.</p>
       </div>
     </div>
   </div>
+
   <script src="https://www.gstatic.com/firebasejs/6.6.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.6.0/firebase-firestore.js"></script>
 </body>

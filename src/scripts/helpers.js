@@ -1,4 +1,4 @@
-import { parameters, components } from './index';
+import { parameters, components, sounds } from './index';
 import { PHASES, WEAPON_TYPE } from './constants';
 
 import { saveTopScores, getTopScores } from './firebase';
@@ -40,11 +40,31 @@ export function addPlayerPoint(value) {
 export function subtractThePlayerHealth() {
   parameters.playerHealth--;
   parameters.weaponType = WEAPON_TYPE.singleBullet;
+  sounds.lifeLoose.play();
 }
 
 export function changePhase(phase) {
   parameters.gamePhase = phase;
   parameters.phaseCounter = 0;
+
+  switch (phase) {
+    case PHASES.menu: {
+      break;
+    }
+
+    case PHASES.start: {
+      sounds.menuBackground.fade(0.5, 0.2, 500);
+      sounds.shipInterior.play();
+      sounds.shipInterior.fade(0, 0.3, 2000);
+      break;
+    }
+
+    case PHASES.end: {
+      sounds.shipInterior.fade(0.3, 0, 500);
+      sounds.gameOver.play();
+      sounds.menuBackground.fade(0.2, 0.5, 2000);
+    }
+  }
 }
 
 // steering
@@ -80,6 +100,7 @@ export function keyDownHandler(event) {
     case PHASES.menu: {
       // up
       if (key === 38) {
+        sounds.click.play();
         if (parameters.activeMenuItemIndex === 0) {
           parameters.activeMenuItemIndex = components.menu.length - 1;
         } else {
@@ -87,6 +108,7 @@ export function keyDownHandler(event) {
         }
         components.menu[parameters.activeMenuItemIndex].animationCounter = 0;
       } else if (key === 40) {
+        sounds.click.play();
         if (parameters.activeMenuItemIndex === components.menu.length - 1) {
           parameters.activeMenuItemIndex = 0;
         } else {
@@ -94,6 +116,7 @@ export function keyDownHandler(event) {
         }
         components.menu[parameters.activeMenuItemIndex].animationCounter = 0;
       } else if (key === 32 || key === 13) {
+        sounds.menuOptionAccept.play();
         switch (parameters.activeMenuItemIndex) {
           case 0: {
             changePhase(PHASES.start);
@@ -129,6 +152,7 @@ export function keyDownHandler(event) {
     case PHASES.end: {
       if (key === 32) {
         changePhase(PHASES.menu);
+        sounds.menuOptionAccept.play();
       }
       break;
     }
@@ -136,20 +160,24 @@ export function keyDownHandler(event) {
     case PHASES.topScores: {
       if (key === 32 || key === 13) {
         changePhase(PHASES.menu);
+        sounds.menuOptionAccept.play();
       }
       break;
     }
 
     case PHASES.resultSaving: {
       if (key === 8) {
+        sounds.click.play();
         const str = parameters.inputText;
         parameters.inputText = str.slice(0, str.length - 1);
       } else if (
         parameters.inputText.length < 13 &&
         ((key >= 48 && key <= 57) || (key >= 65 && key <= 90) || key === 32)
       ) {
+        sounds.click.play();
         parameters.inputText += String.fromCharCode(key);
       } else if (key === 13) {
+        sounds.menuOptionAccept.play();
         const record = {
           name: parameters.inputText,
           score: parameters.playerPoints,
