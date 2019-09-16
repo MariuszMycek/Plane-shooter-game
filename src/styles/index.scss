@@ -39,12 +39,19 @@ canvas {
   text-align: center;
 }
 
+.controls {
+  span {
+    color: #c0392b;
+  }
+}
+
 .section {
   margin-bottom: 25px;
 
   .item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    margin-bottom: 20px;
 
     .image {
       display: flex;
@@ -58,8 +65,8 @@ canvas {
     }
 
     .description {
-      flex: auto;
-
+      // flex: auto;
+      margin: 0;
       span {
         font-weight: bold;
       }
@@ -67,7 +74,7 @@ canvas {
   }
 
   h4 {
-    margin-bottom: 5px;
+    // margin-bottom: 5px;
   }
 }
 

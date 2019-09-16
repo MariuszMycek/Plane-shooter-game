@@ -12,8 +12,6 @@ import { resultSaving } from './components/resultSaving';
 import { WEAPON_TYPE } from './constants';
 import BonusCrate from './components/bonusCrate';
 import { Howl, Howler } from 'howler';
-// import TextInput from './components/textInput';
-// import { gameOverView } from './views/gameOver';
 
 export function initializeObjects() {
   components.heroPlane = new HeroPlane();
