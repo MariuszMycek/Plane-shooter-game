@@ -11,6 +11,7 @@ import { background } from './components/background';
 import { resultSaving } from './components/resultSaving';
 import { WEAPON_TYPE } from './constants';
 import BonusCrate from './components/bonusCrate';
+import Sprite from './components/spriteAnimation';
 import { Howl, Howler } from 'howler';
 
 export function initializeObjects() {
@@ -27,6 +28,7 @@ export function initializeObjects() {
   components.menu = [...menu()];
   components.topScores = [...topScores()];
   components.resultSaving = [...resultSaving()];
+  components.explosions = [];
 }
 
 export function initializeSounds() {
