@@ -43,6 +43,13 @@ export function renderBullets() {
   });
 }
 
+export function renderExplosions() {
+  components.explosions.forEach(explosion => {
+    explosion.update();
+    explosion.newPos();
+  });
+}
+
 export function renderEnemyPlanes() {
   components.enemyPlanes.forEach(enemyPlane => {
     enemyPlane.update();

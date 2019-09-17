@@ -49,6 +49,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.4.0",
     "core-js": "^3.0.1",
-    "howler": "^2.1.2"
+    "howler": "^2.1.2",
+    "preloadjs": "^1.0.1"
   }
 }

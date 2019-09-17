@@ -12,6 +12,7 @@ import {
   renderTopScores,
   renderResultSaving,
   renderBonusCrates,
+  renderExplosions,
 } from './renders';
 
 import {
@@ -90,6 +91,7 @@ export function updateGameArea() {
     case PHASES.menu: {
       renderTitle();
       renderMenu();
+
       break;
     }
 
@@ -121,6 +123,7 @@ export function updateGameArea() {
         renderBullets();
         renderHeroPlane();
         renderEnemyPlanes();
+        renderExplosions();
       } else {
         const { topScores, playerPoints } = parameters;
         const lastResult = topScores[topScores.length - 1].score;
