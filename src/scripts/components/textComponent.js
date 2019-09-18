@@ -16,15 +16,11 @@ export default class TextComponent {
 
   update() {
     const ctx = myGameArea.context;
-
     ctx.font = this.fontWeight + ' ' + this.size + ' ' + this.font;
-
     ctx.fillStyle = this.color;
-
     ctx.shadowBlur = 5;
     ctx.shadowColor = this.shadowColor;
     ctx.textAlign = this.align;
-
     ctx.fillText(this.text, this.posX, this.posY);
     if (this.strokeStyle) {
       ctx.strokeStyle = this.strokeStyle;

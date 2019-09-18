@@ -1,5 +1,9 @@
 import { components, parameters } from './index';
 
+export function renderLoadingScreen() {
+  components.loadingScreen.update();
+}
+
 export function renderBackground() {
   components.background.forEach(bgElement => {
     bgElement.newPos();

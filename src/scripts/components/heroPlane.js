@@ -1,12 +1,9 @@
-import heroPlaneSrc from 'public/assets/images/heroPlane.png';
 import Bullet from './bullet';
-import { myGameArea, parameters, components, sounds } from '../index';
-import { WEAPON_TYPE } from '../constants';
+import { myGameArea, parameters, components, images } from '../index';
 
 export default class HeroPlane {
   constructor() {
-    this.image = new Image();
-    this.image.src = heroPlaneSrc;
+    this.image = images.heroPlane;
     this.width = 48;
     this.height = 48;
     this.speedX = 0;

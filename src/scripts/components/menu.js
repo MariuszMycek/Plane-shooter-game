@@ -1,7 +1,5 @@
 import TextComponent from './textComponent';
-import { components, parameters, myGameArea } from '../index';
-import { resetParams, changePhase } from '../helpers';
-import { PHASES } from '../constants';
+import { parameters, myGameArea } from '../index';
 import { config } from '../config';
 
 class MenuItem extends TextComponent {
@@ -17,8 +15,6 @@ class MenuItem extends TextComponent {
     this.index = index;
     this.color = 'white';
     this.strokeStyle = 'white';
-
-    // this.animationFactor = this.animationCounter /
   }
 
   update() {
@@ -26,7 +22,6 @@ class MenuItem extends TextComponent {
     if (this.animationCounter === 70) this.counterDirection = 'subtract';
 
     if (this.counterDirection === 'add') this.animationCounter++;
-
     if (this.counterDirection === 'subtract') this.animationCounter--;
 
     const fontSize = this.fontSize + this.animationCounter / 50;
@@ -48,10 +43,6 @@ class MenuItem extends TextComponent {
       ctx.fillText(this.text, this.posX, this.posY);
     }
   }
-
-  // moveRigth() {
-  //   this.posX += this.speedX;
-  // }
 }
 
 const viewConfig = {

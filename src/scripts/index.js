@@ -1,4 +1,6 @@
-import { keyDownHandler, keyUpHandler, changePhase } from './helpers';
+import { changePhase } from './helpers';
+import { keyDownHandler, keyUpHandler } from './controls';
+
 import {
   renderBackground,
   renderTitle,
@@ -13,30 +15,33 @@ import {
   renderResultSaving,
   renderBonusCrates,
   renderExplosions,
+  renderLoadingScreen,
 } from './renders';
 
 import {
   generateHeroBullet,
   generateEnemyPlane,
-  initializeObjects,
   generateBonusCrate,
-  initializeSounds,
 } from './objectGenerators';
 
+import { init } from './init';
 import { PHASES, WEAPON_TYPE } from './constants';
-
 import { config } from './config';
+import { getTopScores } from './firebase';
+import { Howler } from 'howler';
+import LoadingScreen from './components/loadingScreen';
 
 import '../styles/index.scss';
 
-import { getTopScores } from './firebase';
-import { Howler } from 'howler';
+export const components = {};
 
-// const startButton = document.querySelector('#startButton');
+export const sounds = {};
+
+export const images = {};
 
 export const parameters = {
   phaseCounter: 0,
-  gamePhase: PHASES.menu,
+  gamePhase: PHASES.loading,
   leftPressed: false,
   rightPressed: false,
   spacePressed: false,
@@ -50,11 +55,8 @@ export const parameters = {
   topScores: [],
   inputText: '',
   weaponType: WEAPON_TYPE.singleBullet,
+  loadCounter: 0,
 };
-
-export const components = {};
-
-export const sounds = {};
 
 export const myGameArea = {
   canvas: document.createElement('canvas'),
@@ -73,31 +75,34 @@ export const myGameArea = {
 };
 
 function startGame() {
-  initializeObjects();
-  initializeSounds();
+  components.loadingScreen = new LoadingScreen();
   Howler.mute(true);
-  sounds.menuBackground.play();
   myGameArea.start();
 }
 
 export function updateGameArea() {
-  parameters.phaseCounter++;
-
   myGameArea.clear();
 
-  renderBackground();
+  parameters.phaseCounter++;
+
+  if (parameters.gamePhase !== PHASES.loading) {
+    renderBackground();
+  }
 
   switch (parameters.gamePhase) {
+    case PHASES.loading: {
+      renderLoadingScreen();
+      break;
+    }
+
     case PHASES.menu: {
       renderTitle();
       renderMenu();
-
       break;
     }
 
     case PHASES.topScores: {
       renderTopScores();
-
       break;
     }
 
@@ -147,19 +152,16 @@ export function updateGameArea() {
     }
   }
 
-  renderScore();
-  renderLives();
+  if (parameters.gamePhase !== PHASES.loading) {
+    renderScore();
+    renderLives();
+  }
 }
 
+// event listeners
 document.addEventListener('keydown', keyDownHandler);
 
 document.addEventListener('keyup', keyUpHandler);
-
-window.onload = () => {
-  getTopScores().then(() => {
-    startGame();
-  });
-};
 
 document.querySelector('#mute').addEventListener('click', e => {
   if (Howler._muted) {
@@ -170,3 +172,10 @@ document.querySelector('#mute').addEventListener('click', e => {
     e.target.textContent = 'Sound: muted';
   }
 });
+
+window.onload = () => {
+  getTopScores().then(() => {
+    startGame();
+    init();
+  });
+};

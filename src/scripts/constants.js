@@ -1,6 +1,7 @@
 export const PHASES = {
   start: 'start',
   stop: 'stop',
+  loading: 'loading',
   menu: 'menu',
   topScores: 'topScores',
   running: 'running',

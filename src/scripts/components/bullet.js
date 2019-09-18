@@ -1,7 +1,7 @@
 import { myGameArea, parameters, components, sounds } from '../index';
 import { AABBIntersect, addPlayerPoint } from '../helpers';
 import { WEAPON_TYPE } from '../constants';
-import Sprite from './spriteAnimation';
+import Explosion from './explosion';
 
 export default class Bullet {
   constructor(posX, posY) {
@@ -52,10 +52,10 @@ export default class Bullet {
             bullet => bullet.posY !== this.posY
           );
         }
-        sounds.basicEnemyExplosion.play();
+        sounds.explosion_1.play();
         addPlayerPoint(1);
         components.explosions.push(
-          new Sprite(plane.posX - 16, plane.posY - 16, 'expl_06_')
+          new Explosion(plane.posX - 16, plane.posY - 16, 'expl_06_')
         );
       }
     });

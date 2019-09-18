@@ -1,11 +1,9 @@
-import enemyPlaneSrc from 'public/assets/images/enemyPlane.png';
-import { myGameArea, parameters, components } from '../index';
-import { subtractThePlayerHealth } from '../helpers';
+import { myGameArea, parameters, components, images } from '../index';
+import { enemyAchievesTheGoal } from '../helpers';
 
 export default class EnemyPlane {
   constructor(posX, posY) {
-    this.image = new Image();
-    this.image.src = enemyPlaneSrc;
+    this.image = images.enemyPlane;
     this.width = 32;
     this.height = 32;
     this.speedX = parameters.directionFactor[Math.floor(Math.random() * 3)];
@@ -30,7 +28,7 @@ export default class EnemyPlane {
 
   checkTheGoal() {
     if (this.posY === 590) {
-      subtractThePlayerHealth();
+      enemyAchievesTheGoal();
     }
   }
 }
