@@ -1,11 +1,9 @@
-import bgImage from 'public/assets/images/gameBG.png';
-import { myGameArea, parameters, components } from '../index';
+import { myGameArea, parameters, images } from '../index';
 import { PHASES } from '../constants';
 
 class Background {
   constructor(posY) {
-    this.image = new Image();
-    this.image.src = bgImage;
+    this.image = images.gameBG;
     this.width = 618;
     this.height = 824;
     this.speedY = 0.5;

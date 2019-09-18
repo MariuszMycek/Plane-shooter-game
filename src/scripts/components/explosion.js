@@ -1,16 +1,14 @@
 import spriteData from 'public/assets/sprites/explosions.json';
-import spriteSheet from 'public/assets/sprites/explosions.png';
-import { myGameArea, components } from '../index';
+import { myGameArea, components, images } from '../index';
 
 const { frames } = spriteData;
 
-export default class Sprite {
+export default class Explosion {
   constructor(posX, posY, name, animationSpeed) {
     this.posX = posX;
     this.posY = posY;
     this.speedY = 0.5;
-    this.image = new Image();
-    this.image.src = spriteSheet;
+    this.image = images.explosions;
     this.frames = [];
     this.counter = 0;
     this.animationSpeed = animationSpeed || 5;
