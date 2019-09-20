@@ -163,13 +163,17 @@ document.addEventListener('keydown', keyDownHandler);
 
 document.addEventListener('keyup', keyUpHandler);
 
-document.querySelector('#mute').addEventListener('click', e => {
+document.querySelector('#mute').addEventListener('click', function(e) {
+  const icon = this.querySelector('i');
+  const span = this.querySelector('span');
   if (Howler._muted) {
     Howler.mute(false);
-    e.target.textContent = 'Sound: unmuted';
+    icon.className = 'la la-lg la-volume-up';
+    span.textContent = 'Sound: unmuted ';
   } else {
     Howler.mute(true);
-    e.target.textContent = 'Sound: muted';
+    icon.className = 'la la-lg la-volume-off';
+    span.textContent = 'Sound: muted ';
   }
 });
 
